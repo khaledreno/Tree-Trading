@@ -70,7 +70,7 @@ namespace Tree_Trading
         //    TextBox5.Text = dateAsString;
 
                 //https://.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur/jpy.json
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                //HttpResponseMessage response = await client.GetAsync(apiUrl);
 
         //    try
         //    {
@@ -117,7 +117,7 @@ namespace Tree_Trading
             Currency1Var = DropList1.SelectedValue.ToLower();
 
              Label5.Text = "CCY1 IS " + Currency1Var + " and CCY2 is " + Currency2Var;
-            item1 = DropList1.SelectedValue;
+            //item1 = DropList1.SelectedValue;
             double egpValue = 0; // Define the variable to store the exchange rate
             PriceLabel.Text = 1.ToString();
             using (HttpClient client = new HttpClient())
