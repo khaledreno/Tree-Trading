@@ -15,11 +15,30 @@ namespace Tree_Trading
         DateTime dateTimeWithTime = DateTime.Now;
         String Currency1Var, Currency2Var, Amount1TextBox1FS, Amount2TextBox1FS;
         float Amount1TextBox1F, Amount2TextBox1F;
+        bool authh;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Session["authUsr"] != null && Session["authUsr"] is bool)
+            {
+                authh = (bool)Session["authUsr"];
+            }
+            else
+            {
+                // Handle the case where the variable is not set or not a boolean in Session
+            }
+
+            if (!authh)
+            {
+                Response.Redirect("~/UserLogin.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+            }
             string dateAsString = dateTimeWithTime.ToString("dd/MM/yyyy");
             TradeDateTextBox.Text = dateAsString;
+
+
             
         }
 

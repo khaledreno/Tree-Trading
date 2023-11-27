@@ -22,55 +22,61 @@ namespace Tree_Trading
         String Currency1Var, Currency2Var;
         dynamic egpValue;
         DateTime dateTimeWithTime = DateTime.Now;
+        bool authh;
+        String usrName;
+        String IsAdmin;
 
-        protected async void Page_Load2Async(object sender, EventArgs e)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                string apiUrl = $"https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/{Currency1Var}/{Currency2Var}.min.json";
-
+        Site1 site1 =  new Site1 ();
 
 
-                //https://.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur/jpy.json
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+        //protected async void Page_Load2Async(object sender, EventArgs e)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        string apiUrl = $"https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/{Currency1Var}/{Currency2Var}.min.json";
 
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string json = await response.Content.ReadAsStringAsync();
 
-                    // Deserialize JSON and extract exchange rates
-                    string jsonString = json.ToString();
+        //        //https://.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur/jpy.json
+        //        HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-                    // Deserialize the JSON string to a dynamic object
-                    dynamic jsonObject = JsonConvert.DeserializeObject(jsonString);
 
-                    // Access the double value using the key "egp"
-                     egpValue = jsonObject.egp;
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            string json = await response.Content.ReadAsStringAsync();
 
-                    // Print the result
-                    Console.WriteLine($"The double value for 'egp' is: {egpValue}");
+        //            // Deserialize JSON and extract exchange rates
+        //            string jsonString = json.ToString();
 
-                    // Handle the retrieved data as needed
-                    await Console.Out.WriteLineAsync(json);
-                    Console.WriteLine(" ");
-                    Console.WriteLine("success");
-                }
-                else
-                {
-                    Console.WriteLine($"Error: {response.StatusCode}");
-                    PriceLabel.Text = "failed to obtain";
-                }
-            }
-        }
+        //            // Deserialize the JSON string to a dynamic object
+        //            dynamic jsonObject = JsonConvert.DeserializeObject(jsonString);
+
+        //            // Access the double value using the key "egp"
+        //             egpValue = jsonObject.egp;
+
+        //            // Print the result
+        //            Console.WriteLine($"The double value for 'egp' is: {egpValue}");
+
+        //            // Handle the retrieved data as needed
+        //            await Console.Out.WriteLineAsync(json);
+        //            Console.WriteLine(" ");
+        //            Console.WriteLine("success");
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine($"Error: {response.StatusCode}");
+        //            PriceLabel.Text = "failed to obtain";
+        //        }
+        //    }
+        //}
 
         //    protected void Page_Load(object sender, EventArgs e)
         //{
         //    string dateAsString = dateTimeWithTime.ToString("dd/MM/yyyy");
         //    TextBox5.Text = dateAsString;
 
-                //https://.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur/jpy.json
-                //HttpResponseMessage response = await client.GetAsync(apiUrl);
+        //https://.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur/jpy.json
+        //HttpResponseMessage response = await client.GetAsync(apiUrl);
 
         //    try
         //    {
@@ -103,81 +109,104 @@ namespace Tree_Trading
 
         protected async void Page_Load(object sender, EventArgs e)
         {
-            // Replace these variables with your actual currency codes
-            //string Currency1Var = "usd";
-            //string Currency2Var = "egp";
+        
 
-            if (!User.Identity.IsAuthenticated)
+            if (Session["authUsr"] != null && Session["authUsr"] is bool)
             {
-                Response.Redirect("~/UserLogin.aspx",false);
+                 authh = (bool)Session["authUsr"];
+            }
+            else
+            {
+                // Handle the case where the variable is not set or not a boolean in Session
+            }
+
+            if (!authh)
+            {
+                Response.Redirect("~/UserLogin.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
 
-            Currency2Var = DropList2.SelectedValue.ToLower();
-            Currency1Var = DropList1.SelectedValue.ToLower();
 
-             Label5.Text = "CCY1 IS " + Currency1Var + " and CCY2 is " + Currency2Var;
-            //item1 = DropList1.SelectedValue;
-            double egpValue = 0; // Define the variable to store the exchange rate
-            PriceLabel.Text = 1.ToString();
-            using (HttpClient client = new HttpClient())
+
+            if (Session["Username"] != null && Session["Username"] is String)
             {
-                string apiUrl = $"https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/{Currency1Var}/{Currency2Var}.min.json";
-                try
+                usrName = (string)Session["Username"];
+                TextBox2.Text = usrName.ToString();
+            }
+
+            if (Session["IsAdmin"] != null && Session["IsAdmin"] is String)
+            {
+                IsAdmin = (string)Session["IsAdmin"];
+                AdminLabel.Text = IsAdmin.ToString();
+            }
+
+
+            Currency2Var = DropList2.SelectedValue.ToLower();
+                Currency1Var = DropList1.SelectedValue.ToLower();
+
+                Label5.Text = "CCY1 IS " + Currency1Var + " and CCY2 is " + Currency2Var;
+                //item1 = DropList1.SelectedValue;
+                double egpValue = 0; // Define the variable to store the exchange rate
+                PriceLabel.Text = 1.ToString();
+                using (HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                    if (response.IsSuccessStatusCode)
+                    string apiUrl = $"https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/{Currency1Var}/{Currency2Var}.min.json";
+                    try
                     {
-                        string json = await response.Content.ReadAsStringAsync();
+                        HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-                        // Deserialize JSON and extract exchange rates
-                        string jsonString = json.ToString();
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string json = await response.Content.ReadAsStringAsync();
 
-                        // Deserialize the JSON string to a dynamic object
-                        //dynamic jsonObject = JsonConvert.DeserializeObject(jsonString);
+                            // Deserialize JSON and extract exchange rates
+                            string jsonString = json.ToString();
 
-                        // Access the double value using the key "egp"
+                            // Deserialize the JSON string to a dynamic object
+                            //dynamic jsonObject = JsonConvert.DeserializeObject(jsonString);
 
-                        JObject jsonObject = JObject.Parse(jsonString);
+                            // Access the double value using the key "egp"
 
-                        egpValue = (double)jsonObject[Currency2Var];
+                            JObject jsonObject = JObject.Parse(jsonString);
 
-                        // Handle the retrieved data as needed
-                        Console.WriteLine($"The double value for 'egp' is: {jsonObject}");
-                //HtmlDocument doc1 = web.Load("https://wise.com/us/currency-converter/usd-to-egp-rate");
-                //HtmlDocument doc1 = web.Load("https://wise.com/us/currency-converter/usd-to-egp-rate");
+                            egpValue = (double)jsonObject[Currency2Var];
 
-                        // Output the JSON string
-                        //Console.WriteLine(json);
+                            // Handle the retrieved data as needed
+                            Console.WriteLine($"The double value for 'egp' is: {jsonObject}");
+                            //HtmlDocument doc1 = web.Load("https://wise.com/us/currency-converter/usd-to-egp-rate");
+                            //HtmlDocument doc1 = web.Load("https://wise.com/us/currency-converter/usd-to-egp-rate");
 
-                        // Update your UI or perform other actions with the exchange rate
-                        PriceLabel.Text = $"Exchange Rate: {egpValue}";
+                            // Output the JSON string
+                            //Console.WriteLine(json);
+
+                            // Update your UI or perform other actions with the exchange rate
+                            PriceLabel.Text = $"Exchange Rate: {egpValue}";
+                        }
+
+                        else
+                        {
+                            Console.WriteLine($"Error: {response.StatusCode}");
+                            PriceLabel.Text = "Failed to obtain exchange rate.";
+                        }
                     }
-
-                    else
+                    catch (Exception ex)
                     {
-                        Console.WriteLine($"Error: {response.StatusCode}");
-                        PriceLabel.Text = "Failed to obtain exchange rate.";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    PriceLabel.Text = "Failed to obtain exchange rate from exception";
+                        PriceLabel.Text = "Failed to obtain exchange rate from exception";
 
+                    }
                 }
             }
-        }
+        
 
 
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (!TextBox1.Text.IsNullOrWhiteSpace())
-            {
-                String y = TextBox1.Text;
-                TextBox2.Text = y[0].ToString().ToLower();
-            }
+            //if (!TextBox1.Text.IsNullOrWhiteSpace())
+            //{
+            //    String y = TextBox1.Text;
+            //    TextBox2.Text = y[0].ToString().ToLower();
+            //}
 
 
 

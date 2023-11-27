@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FxDealPage.aspx.cs" Inherits="Tree_Trading.FxDealPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="FxDealPage.aspx.cs" Inherits="Tree_Trading.FxDealPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
   
          &nbsp;  <asp:Label ID="DealidLabel" runat="server" Text="Deal ID"></asp:Label>

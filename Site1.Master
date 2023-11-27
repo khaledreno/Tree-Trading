@@ -1,4 +1,24 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Tree_Trading.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="Tree_Trading.Site1" %>
+
+<%--<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
+
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="Tree_Trading.SiteMaster" %>--%>
 
 <!DOCTYPE html>
 
@@ -33,6 +53,7 @@
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
+                
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
@@ -44,14 +65,16 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div id="Mylist1"  class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul id="Mylist" class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Home</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/About">About</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contact</a></li>
-<li class="nav-item"><a class="nav-link" runat="server" href="~/UserLogin"> Login</a></li> 
+                         <li class="nav-item"><a class="nav-link" runat="server" href="~/UserLogin"> Logout</a></li>      
 
-                    </ul>
+
+                        <asp:Label class="nav-item" ID="UserNameLabel" runat="server" Text="Label"></asp:Label>
+                        </ul>
 
                     
                 </div>
@@ -59,7 +82,9 @@
         </nav>
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
+
             </asp:ContentPlaceHolder>
+            <br />
             <hr />
             <footer>
                
