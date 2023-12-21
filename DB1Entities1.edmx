@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB1Entities.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DEALS">
+          <Key>
+            <PropertyRef Name="DEALID" />
+          </Key>
+          <Property Name="DEALID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="DEAL_TYPE" Type="varchar2" MaxLength="20" />
+          <Property Name="POTFOLIO_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="USER_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="CCY1" Type="varchar2" MaxLength="45" />
+          <Property Name="CCY2" Type="varchar2" MaxLength="45" />
+          <Property Name="RATE" Type="number" Precision="38" Scale="2" />
+          <Property Name="AMOUNT" Type="number" Precision="10" Scale="0" />
+          <Property Name="TIMESTAMP" Type="timestamp" Precision="6" />
+        </EntityType>
+        <EntityType Name="PORTFOLIO_LOG">
+          <Key>
+            <PropertyRef Name="LOGID" />
+          </Key>
+          <Property Name="LOGID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="DEALID" Type="number" Precision="38" Scale="0" />
+          <Property Name="DEALTYPE" Type="varchar2" MaxLength="45" />
+          <Property Name="CURRENTAMOUNT" Type="number" Precision="10" Scale="0" />
+          <Property Name="CHNAGEDAMOUNT" Type="number" Precision="10" Scale="0" />
+          <Property Name="PORTFOLIOID" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="PORTFOLIOS">
+          <Key>
+            <PropertyRef Name="PORTFOLIOID" />
+          </Key>
+          <Property Name="PORTFOLIOID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="PORTFOLIOID_NAME" Type="varchar2" MaxLength="25" />
+          <Property Name="PORTFOLIO_TOTAL_AMOUNT" Type="number" Precision="10" Scale="0" />
+          <Property Name="TIMECREATED" Type="timestamp" Precision="6" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="FULLNAME" Type="varchar2" MaxLength="30" />
+          <Property Name="USERNAME" Type="varchar2" MaxLength="30" />
+          <Property Name="EMAIL" Type="varchar2" MaxLength="50" />
+          <Property Name="USERROLE" Type="varchar2" MaxLength="10" />
+          <Property Name="ACTIVEFLAG" Type="number" Precision="10" Scale="0" />
+          <Property Name="PASSWORD" Type="varchar2" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK1USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="DEALS" Type="Self.DEALS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="DEALS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKDEAL">
+          <End Role="DEALS" Type="Self.DEALS" Multiplicity="0..1" />
+          <End Role="PORTFOLIO_LOG" Type="Self.PORTFOLIO_LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEALS">
+              <PropertyRef Name="DEALID" />
+            </Principal>
+            <Dependent Role="PORTFOLIO_LOG">
+              <PropertyRef Name="DEALID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPORT">
+          <End Role="PORTFOLIOS" Type="Self.PORTFOLIOS" Multiplicity="0..1" />
+          <End Role="PORTFOLIO_LOG" Type="Self.PORTFOLIO_LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PORTFOLIOS">
+              <PropertyRef Name="PORTFOLIOID" />
+            </Principal>
+            <Dependent Role="PORTFOLIO_LOG">
+              <PropertyRef Name="PORTFOLIOID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPORT2">
+          <End Role="PORTFOLIOS" Type="Self.PORTFOLIOS" Multiplicity="0..1" />
+          <End Role="DEALS" Type="Self.DEALS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PORTFOLIOS">
+              <PropertyRef Name="PORTFOLIOID" />
+            </Principal>
+            <Dependent Role="DEALS">
+              <PropertyRef Name="POTFOLIO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB1EntitiesStoreContainer">
+          <EntitySet Name="DEALS" EntityType="Self.DEALS" Schema="KHALEDM" store:Type="Tables" />
+          <EntitySet Name="PORTFOLIO_LOG" EntityType="Self.PORTFOLIO_LOG" Schema="KHALEDM" store:Type="Tables" />
+          <EntitySet Name="PORTFOLIOS" EntityType="Self.PORTFOLIOS" Schema="KHALEDM" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="KHALEDM" store:Type="Tables" />
+          <AssociationSet Name="FK1USERS" Association="Self.FK1USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="DEALS" EntitySet="DEALS" />
+          </AssociationSet>
+          <AssociationSet Name="FKDEAL" Association="Self.FKDEAL">
+            <End Role="DEALS" EntitySet="DEALS" />
+            <End Role="PORTFOLIO_LOG" EntitySet="PORTFOLIO_LOG" />
+          </AssociationSet>
+          <AssociationSet Name="FKPORT" Association="Self.FKPORT">
+            <End Role="PORTFOLIOS" EntitySet="PORTFOLIOS" />
+            <End Role="PORTFOLIO_LOG" EntitySet="PORTFOLIO_LOG" />
+          </AssociationSet>
+          <AssociationSet Name="FKPORT2" Association="Self.FKPORT2">
+            <End Role="PORTFOLIOS" EntitySet="PORTFOLIOS" />
+            <End Role="DEALS" EntitySet="DEALS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB1Entities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DEAL">
+          <Key>
+            <PropertyRef Name="DEALID" />
+          </Key>
+          <Property Name="DEALID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="DEAL_TYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="POTFOLIO_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="USER_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="CCY1" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="CCY2" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="RATE" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="AMOUNT" Type="Int32" />
+          <Property Name="TIMESTAMP" Type="DateTime" Precision="6" />
+          <NavigationProperty Name="USER" Relationship="Self.FK1USERS" FromRole="DEALS" ToRole="USERS" />
+          <NavigationProperty Name="PORTFOLIO_LOG" Relationship="Self.FKDEAL" FromRole="DEALS" ToRole="PORTFOLIO_LOG" />
+          <NavigationProperty Name="PORTFOLIO" Relationship="Self.FKPORT2" FromRole="DEALS" ToRole="PORTFOLIOS" />
+        </EntityType>
+        <EntityType Name="PORTFOLIO_LOG">
+          <Key>
+            <PropertyRef Name="LOGID" />
+          </Key>
+          <Property Name="LOGID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="DEALID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="DEALTYPE" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="CURRENTAMOUNT" Type="Int32" />
+          <Property Name="CHNAGEDAMOUNT" Type="Int32" />
+          <Property Name="PORTFOLIOID" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="DEAL" Relationship="Self.FKDEAL" FromRole="PORTFOLIO_LOG" ToRole="DEALS" />
+          <NavigationProperty Name="PORTFOLIO" Relationship="Self.FKPORT" FromRole="PORTFOLIO_LOG" ToRole="PORTFOLIOS" />
+        </EntityType>
+        <EntityType Name="PORTFOLIO">
+          <Key>
+            <PropertyRef Name="PORTFOLIOID" />
+          </Key>
+          <Property Name="PORTFOLIOID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="PORTFOLIOID_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PORTFOLIO_TOTAL_AMOUNT" Type="Int32" />
+          <Property Name="TIMECREATED" Type="DateTime" Precision="6" />
+          <NavigationProperty Name="DEALS" Relationship="Self.FKPORT2" FromRole="PORTFOLIOS" ToRole="DEALS" />
+          <NavigationProperty Name="PORTFOLIO_LOG" Relationship="Self.FKPORT" FromRole="PORTFOLIOS" ToRole="PORTFOLIO_LOG" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="FULLNAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="USERNAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USERROLE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ACTIVEFLAG" Type="Int32" />
+          <Property Name="PASSWORD" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DEALS" Relationship="Self.FK1USERS" FromRole="USERS" ToRole="DEALS" />
+        </EntityType>
+        <Association Name="FK1USERS">
+          <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="DEALS" Type="Self.DEAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="DEALS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKDEAL">
+          <End Role="DEALS" Type="Self.DEAL" Multiplicity="0..1" />
+          <End Role="PORTFOLIO_LOG" Type="Self.PORTFOLIO_LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEALS">
+              <PropertyRef Name="DEALID" />
+            </Principal>
+            <Dependent Role="PORTFOLIO_LOG">
+              <PropertyRef Name="DEALID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPORT2">
+          <End Role="PORTFOLIOS" Type="Self.PORTFOLIO" Multiplicity="0..1" />
+          <End Role="DEALS" Type="Self.DEAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PORTFOLIOS">
+              <PropertyRef Name="PORTFOLIOID" />
+            </Principal>
+            <Dependent Role="DEALS">
+              <PropertyRef Name="POTFOLIO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPORT">
+          <End Role="PORTFOLIOS" Type="Self.PORTFOLIO" Multiplicity="0..1" />
+          <End Role="PORTFOLIO_LOG" Type="Self.PORTFOLIO_LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PORTFOLIOS">
+              <PropertyRef Name="PORTFOLIOID" />
+            </Principal>
+            <Dependent Role="PORTFOLIO_LOG">
+              <PropertyRef Name="PORTFOLIOID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB1Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DEALS" EntityType="Self.DEAL" />
+          <EntitySet Name="PORTFOLIO_LOG" EntityType="Self.PORTFOLIO_LOG" />
+          <EntitySet Name="PORTFOLIOS" EntityType="Self.PORTFOLIO" />
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <AssociationSet Name="FK1USERS" Association="Self.FK1USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="DEALS" EntitySet="DEALS" />
+          </AssociationSet>
+          <AssociationSet Name="FKDEAL" Association="Self.FKDEAL">
+            <End Role="DEALS" EntitySet="DEALS" />
+            <End Role="PORTFOLIO_LOG" EntitySet="PORTFOLIO_LOG" />
+          </AssociationSet>
+          <AssociationSet Name="FKPORT2" Association="Self.FKPORT2">
+            <End Role="PORTFOLIOS" EntitySet="PORTFOLIOS" />
+            <End Role="DEALS" EntitySet="DEALS" />
+          </AssociationSet>
+          <AssociationSet Name="FKPORT" Association="Self.FKPORT">
+            <End Role="PORTFOLIOS" EntitySet="PORTFOLIOS" />
+            <End Role="PORTFOLIO_LOG" EntitySet="PORTFOLIO_LOG" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB1EntitiesStoreContainer" CdmEntityContainer="DB1Entities1">
+          <EntitySetMapping Name="DEALS">
+            <EntityTypeMapping TypeName="DB1Entities.DEAL">
+              <MappingFragment StoreEntitySet="DEALS">
+                <ScalarProperty Name="DEALID" ColumnName="DEALID" />
+                <ScalarProperty Name="DEAL_TYPE" ColumnName="DEAL_TYPE" />
+                <ScalarProperty Name="POTFOLIO_ID" ColumnName="POTFOLIO_ID" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="CCY1" ColumnName="CCY1" />
+                <ScalarProperty Name="CCY2" ColumnName="CCY2" />
+                <ScalarProperty Name="RATE" ColumnName="RATE" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PORTFOLIO_LOG">
+            <EntityTypeMapping TypeName="DB1Entities.PORTFOLIO_LOG">
+              <MappingFragment StoreEntitySet="PORTFOLIO_LOG">
+                <ScalarProperty Name="LOGID" ColumnName="LOGID" />
+                <ScalarProperty Name="DEALID" ColumnName="DEALID" />
+                <ScalarProperty Name="DEALTYPE" ColumnName="DEALTYPE" />
+                <ScalarProperty Name="CURRENTAMOUNT" ColumnName="CURRENTAMOUNT" />
+                <ScalarProperty Name="CHNAGEDAMOUNT" ColumnName="CHNAGEDAMOUNT" />
+                <ScalarProperty Name="PORTFOLIOID" ColumnName="PORTFOLIOID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PORTFOLIOS">
+            <EntityTypeMapping TypeName="DB1Entities.PORTFOLIO">
+              <MappingFragment StoreEntitySet="PORTFOLIOS">
+                <ScalarProperty Name="PORTFOLIOID" ColumnName="PORTFOLIOID" />
+                <ScalarProperty Name="PORTFOLIOID_NAME" ColumnName="PORTFOLIOID_NAME" />
+                <ScalarProperty Name="PORTFOLIO_TOTAL_AMOUNT" ColumnName="PORTFOLIO_TOTAL_AMOUNT" />
+                <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="DB1Entities.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="USERROLE" ColumnName="USERROLE" />
+                <ScalarProperty Name="ACTIVEFLAG" ColumnName="ACTIVEFLAG" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
