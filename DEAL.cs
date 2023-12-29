@@ -27,12 +27,14 @@ namespace Tree_Trading
         public string CCY1 { get; set; }
         public string CCY2 { get; set; }
         public Nullable<decimal> RATE { get; set; }
-        public Nullable<int> AMOUNT { get; set; }
-        public Nullable<System.DateTime> TIMESTAMP { get; set; }
+        public Nullable<decimal> AMOUNT { get; set; }
+        public Nullable<System.DateTime> TRADE_DATE { get; set; }
+        public string BANK1 { get; set; }
+        public string BANK2 { get; set; }
     
+        public virtual PORTFOLIO PORTFOLIO { get; set; }
         public virtual USER USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PORTFOLIO_LOG> PORTFOLIO_LOG { get; set; }
-        public virtual PORTFOLIO PORTFOLIO { get; set; }
     }
 }

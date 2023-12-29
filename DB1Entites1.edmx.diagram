@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0893e8e612784e46a4fad2a47d902de7" Name="Diagram1">
+        <EntityTypeShape EntityType="DB1Entites.DEAL" Width="1.5" PointX="5.375" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB1Entites.PORTFOLIO_LOG" Width="1.5" PointX="9.625" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB1Entites.PORTFOLIO" Width="1.5" PointX="0.625" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB1Entites.USER" Width="1.5" PointX="2.5" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="DB1Entites.DPID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB1Entites.DUID1" ManuallyRouted="false" />
+        <AssociationConnector Association="DB1Entites.PLD1" ManuallyRouted="false" />
+        <AssociationConnector Association="DB1Entites.PLPID1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

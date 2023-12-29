@@ -13,10 +13,10 @@ namespace Tree_Trading
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DB1Entities1 : DbContext
+    public partial class DB1Entites1 : DbContext
     {
-        public DB1Entities1()
-            : base("name=DB1Entities1")
+        public DB1Entites1()
+            : base("name=DB1Entites1")
         {
         }
     

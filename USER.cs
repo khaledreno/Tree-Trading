@@ -22,11 +22,11 @@ namespace Tree_Trading
     
         public decimal USER_ID { get; set; }
         public string FULLNAME { get; set; }
-        public string USERNAME { get; set; }
         public string EMAIL { get; set; }
         public string USERROLE { get; set; }
         public Nullable<int> ACTIVEFLAG { get; set; }
         public string PASSWORD { get; set; }
+        public string USERNAME { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DEAL> DEALS { get; set; }

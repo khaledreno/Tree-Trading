@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,7 +15,7 @@ namespace Tree_Trading
 
         String UsernameBox, NameBox, EmailBox, Password1Box, Password2Box, UserRole;
         bool ActivFlag;
-        DB1Entities1 db = new DB1Entities1();
+        DB1Entites1 db = new DB1Entites1();
 
 
         protected void Insert_User(object sender, EventArgs e)
@@ -25,7 +26,56 @@ namespace Tree_Trading
             Password1Box = PasswordField.Text;
             Password2Box = PasswordField.Text;
             ActivFlag = ActivCheckBox.Checked;
+            int aflag;
+            
+            if (ActivFlag == true) {
+                aflag = 1;
+            }
+            else
+            {
+                aflag = 0;
 
+            }
+
+            USER userobj = new USER()
+            {
+                USERNAME = UsernameBox,
+                FULLNAME = FullnameField.Text,
+                PASSWORD = PasswordField.Text,
+         
+                ACTIVEFLAG = aflag,
+
+            };
+
+            if (PasswordField.Text == Password2Field.Text)
+            {
+                try
+                {
+                    db.USERS.Add(userobj);
+                    db.SaveChanges();
+                    Label0.Visible = true;
+                    Label0.Text = "User" + UsernameBox + "Created ";
+                }
+                catch (DbUpdateException ex)
+                {
+
+                    Exception innerException = ex;
+                    while (innerException != null)
+                    {
+                        Console.WriteLine(innerException.Message); // Output the inner exception message
+                        innerException = innerException.InnerException;
+                        Label0.Visible = true;
+                        Label0.Text = "failed to save to database";
+                    }
+
+
+                }
+            }
+            else
+            {
+                Label0.Visible = true;
+                Label0.Text = "Password doesn't match ";
+            }
         }
 
         protected void TextBox4_TextChanged(object sender, EventArgs e)
@@ -33,14 +83,11 @@ namespace Tree_Trading
 
         }
 
-       
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            GridView2.DataSource = db.USERS.ToList();
-            GridView2.DataBind();
-
-
+            GridView1.DataSource = db.USERS.ToList();
+            GridView1.DataBind();
         }
 
 
@@ -48,22 +95,16 @@ namespace Tree_Trading
         protected void SearchUserId(object sender, EventArgs e)
         {
          
-                int Id = int.Parse(SearchBox.Text);
+                String Id =  SearchBox.Text;
            
 
-            if (Id.GetType() == typeof(int))
-                {
                     var query = from y in db.USERS
-                                where y.USER_ID == Id
-                                select new { y.USER_ID, y.USERROLE, y.FULLNAME };
+                                where y.USERNAME == Id
+                                select new { y.USERNAME, y.USERROLE, y.FULLNAME };
 
                     
-                        GridView2.DataSource = query.ToList();
-                        GridView2.DataBind();
-                    
-                   
-                    
-                }
+                        GridView1.DataSource = query.ToList();
+                        GridView1.DataBind();
            
                    }
 

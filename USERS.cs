@@ -12,16 +12,14 @@ namespace Tree_Trading
     using System;
     using System.Collections.Generic;
     
-    public partial class PORTFOLIO_LOG
+    public partial class USERS
     {
-        public decimal LOGID { get; set; }
-        public Nullable<decimal> DEALID { get; set; }
-        public string DEALTYPE { get; set; }
-        public Nullable<decimal> CURRENTAMOUNT { get; set; }
-        public Nullable<decimal> CHNAGEDAMOUNT { get; set; }
-        public Nullable<decimal> PORTFOLIOID { get; set; }
-    
-        public virtual DEAL DEAL { get; set; }
-        public virtual PORTFOLIO PORTFOLIO { get; set; }
+        public decimal USER_ID { get; set; }
+        public string FULLNAME { get; set; }
+        public string USERNAME { get; set; }
+        public string EMAIL { get; set; }
+        public string USERROLE { get; set; }
+        public Nullable<int> ACTIVEFLAG { get; set; }
+        public string PASSWORD { get; set; }
     }
 }

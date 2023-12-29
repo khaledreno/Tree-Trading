@@ -15,15 +15,6 @@ namespace Tree_Trading
     {
 
         /// <summary>
-        /// Label6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
-
-        /// <summary>
         /// FullnameField control.
         /// </summary>
         /// <remarks>
@@ -87,6 +78,15 @@ namespace Tree_Trading
         protected global::System.Web.UI.WebControls.CheckBox ActivCheckBox;
 
         /// <summary>
+        /// Label0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label0;
+
+        /// <summary>
         /// Button1 control.
         /// </summary>
         /// <remarks>
@@ -96,13 +96,13 @@ namespace Tree_Trading
         protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
-        /// GridView2 control.
+        /// GridView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
 
         /// <summary>
         /// Label7 control.
